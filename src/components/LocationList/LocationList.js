@@ -16,6 +16,7 @@ const LocationList = props => {
               onClick={props.handleClick}
               id={location.name}
               variant="outline-info"
+              size="sm"
             >
               {location.name}
             </Button>
@@ -23,6 +24,7 @@ const LocationList = props => {
               onClick={props.handleDelete}
               id={location.name}
               variant="outline-danger"
+              size="sm"
             >
               <i className="far fa-minus-square" />
             </Button>

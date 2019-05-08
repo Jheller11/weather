@@ -10,8 +10,10 @@ All data for this application is retreived via the Open Weather Map API (https:/
 
 ## Techs Used
 
-This application is built with Create React App v3.
+- Create React App (v3)
+- react-google-maps (https://github.com/tomchentw/react-google-maps)
+- react-bootstrap (https://react-bootstrap.github.io/)
 
 ## Deployed Application
 
-TBD
+https://j-weather.surge.sh
