@@ -24,6 +24,9 @@ const CurrentWeatherContainer = props => {
         <Row>
           <Col sm={6}>
             <h4>Current weather for: {props.data.name}</h4>
+            <span className="text-center">
+              <Icon />
+            </span>
             <div>Weather: {props.data.weather[0].main}</div>
             <div>Description: {props.data.weather[0].description}</div>
             <div>Temperature: {kelvinToFahrenheit(props.data.main.temp)}</div>
@@ -41,7 +44,6 @@ const CurrentWeatherContainer = props => {
           </Col>
           <Col sm={6}>
             <h4>Location</h4>
-            <Icon />
             <Map
               isMarkerShown
               googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
