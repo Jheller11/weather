@@ -5,10 +5,10 @@ import Button from 'react-bootstrap/Button'
 const ThemeToggler = props => {
   return (
     <ButtonGroup>
-      <Button onClick={props.toggler} size="sm" variant="light">
+      <Button onClick={props.toggler} size="sm" variant="light" id="light">
         Light
       </Button>
-      <Button onClick={props.toggler} size="sm" variant="dark">
+      <Button onClick={props.toggler} size="sm" variant="dark" id="dark">
         Dark
       </Button>
     </ButtonGroup>

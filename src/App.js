@@ -40,8 +40,16 @@ class App extends Component {
     this.loadLocalStorage()
   }
 
-  toggleTheme(theme) {
-    this.setState({ light: !this.state.light })
+  toggleTheme(e) {
+    if (e.target.id === 'dark' && this.state.light) {
+      this.setState({
+        light: false
+      })
+    } else if (e.target.id === 'light' && !this.state.light) {
+      this.setState({
+        light: true
+      })
+    }
   }
 
   // location list item buttons click event, set new data
@@ -86,7 +94,7 @@ class App extends Component {
 
   // clear all local storage
   clearLocalStorage() {
-    this.setState({ locations: [] })
+    this.setState({ locations: [], data: null })
     localStorage.locations = []
   }
 
