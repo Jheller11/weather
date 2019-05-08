@@ -6,13 +6,11 @@ import styles from './App.module.css'
 import LocationList from './components/LocationList/LocationList'
 import CurrentWeatherContainer from './components/CurrentWeatherContainer/CurrentWeatherContainer'
 import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
 import Alert from 'react-bootstrap/Alert'
 import FormControl from 'react-bootstrap/FormControl'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import ForecastContainer from './components/ForecastContainer/ForecastContainer'
-import Container from 'react-bootstrap/Container'
 
 class App extends Component {
   constructor(props) {

@@ -32,7 +32,7 @@ const CurrentWeatherContainer = props => {
             <h3>Weather</h3>
             <h4>Current weather for {props.data.name}</h4>
             <span className="text-center">
-              <Icon />
+              <Icon code={props.data.weather[0].id} />
             </span>
             <div>Weather: {props.data.weather[0].main}</div>
             <div>Description: {props.data.weather[0].description}</div>
