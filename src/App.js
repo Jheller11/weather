@@ -11,6 +11,9 @@ import FormControl from 'react-bootstrap/FormControl'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import ForecastContainer from './components/ForecastContainer/ForecastContainer'
+import ThemeToggler from './components/ThemeToggler/ThemeToggler'
+import { Helmet } from 'react-helmet'
+import Container from 'react-bootstrap/Container'
 
 class App extends Component {
   constructor(props) {
@@ -19,7 +22,8 @@ class App extends Component {
       locations: [],
       data: null,
       error: false,
-      errorMessage: ''
+      errorMessage: '',
+      light: true
     }
     this.getLocationFromBrowser = this.getLocationFromBrowser.bind(this)
     this.fetchWeather = this.fetchWeather.bind(this)
@@ -28,10 +32,16 @@ class App extends Component {
     this.loadLocalStorage = this.loadLocalStorage.bind(this)
     this.handleLocationButton = this.handleLocationButton.bind(this)
     this.deleteLocationItem = this.deleteLocationItem.bind(this)
+    this.toggleTheme = this.toggleTheme.bind(this)
+    this.clearLocalStorage = this.clearLocalStorage.bind(this)
   }
 
   componentDidMount() {
     this.loadLocalStorage()
+  }
+
+  toggleTheme(theme) {
+    this.setState({ light: !this.state.light })
   }
 
   // location list item buttons click event, set new data
@@ -72,6 +82,12 @@ class App extends Component {
   saveLocalStorage(array) {
     if (array) localStorage.locations = JSON.stringify(array)
     else localStorage.locations = JSON.stringify(this.state.locations)
+  }
+
+  // clear all local storage
+  clearLocalStorage() {
+    this.setState({ locations: [] })
+    localStorage.locations = []
   }
 
   // handle click of 'Find me' button (user must allow)
@@ -142,8 +158,30 @@ class App extends Component {
   render() {
     return (
       <Fragment>
+        <Helmet>
+          {this.state.light ? (
+            <link
+              href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css"
+              rel="stylesheet"
+              integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf"
+              crossorigin="anonymous"
+            />
+          ) : (
+            <link
+              href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/darkly/bootstrap.min.css"
+              rel="stylesheet"
+              integrity="sha384-w+8Gqjk9Cuo6XH9HKHG5t5I1VR4YBNdPt/29vwgfZR485eoEJZ8rJRbm3TR32P6k"
+              crossorigin="anonymous"
+            />
+          )}
+          {this.state.data ? (
+            <title>{this.state.data.name} Weather</title>
+          ) : (
+            <title>Jeff's Weather App</title>
+          )}
+        </Helmet>
         {/* header */}
-        <Navbar expand="md" bg="dark" variant="dark" className="pl-5">
+        <Navbar expand="md" bg="light" variant="light" className="pl-5">
           <Navbar.Brand href="#">
             <img src={`favicon.ico`} alt="site icon" />
             {' Weather '}
@@ -195,6 +233,22 @@ class App extends Component {
           <CurrentWeatherContainer data={this.state.data} />
           <hr />
           <ForecastContainer />
+          <hr />
+          <Container>
+            <h6>Settings</h6>
+            <span>Theme: </span>
+            <ThemeToggler toggler={this.toggleTheme} />
+            <div>
+              <span>Clear location history: </span>
+              <Button
+                onClick={this.clearLocalStorage}
+                variant="warning"
+                size="sm"
+              >
+                Clear
+              </Button>
+            </div>
+          </Container>
         </main>
         {/* /main */}
 
