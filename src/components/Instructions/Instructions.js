@@ -9,11 +9,11 @@ const Instructions = () => {
       </p>
       <ol>
         <li>
-          Click the 'Locate Me' button at the top of the page (you must allow
+          Click the 'Locate Me' button in the navigation bar (you must allow
           location services in your browser).
         </li>
         <li>
-          Enter your zip code at the top of the page and click Search (US only).
+          Enter your zip code in the navigation bar and click Search (US only).
         </li>
         <li>
           If you've used the application before, select any of the 'Recently

@@ -15,7 +15,7 @@ const LocationList = props => {
             <Button
               onClick={props.handleClick}
               id={location.name}
-              variant="secondary"
+              variant="outline-info"
             >
               {location.name}
             </Button>
@@ -24,7 +24,7 @@ const LocationList = props => {
               id={location.name}
               variant="outline-danger"
             >
-              X
+              <i className="far fa-minus-square" />
             </Button>
           </ButtonGroup>
         )
@@ -34,5 +34,3 @@ const LocationList = props => {
 }
 
 export default LocationList
-
-// Receives list of locations as props.  Renders one LocationItem per location

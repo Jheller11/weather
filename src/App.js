@@ -12,6 +12,7 @@ import FormControl from 'react-bootstrap/FormControl'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import ForecastContainer from './components/ForecastContainer/ForecastContainer'
+import Container from 'react-bootstrap/Container'
 
 class App extends Component {
   constructor(props) {
@@ -144,7 +145,7 @@ class App extends Component {
     return (
       <Fragment>
         {/* header */}
-        <Navbar expand="md" bg="dark" variant="dark">
+        <Navbar expand="md" bg="dark" variant="dark" className="pl-5">
           <Navbar.Brand href="#">
             <img src={`favicon.ico`} alt="site icon" />
             {' Weather '}
@@ -173,6 +174,7 @@ class App extends Component {
             </Form>
           </Navbar.Collapse>
         </Navbar>
+
         {/* /header */}
         {/* Main */}
         <main className={styles.App}>
