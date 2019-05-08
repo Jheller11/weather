@@ -10,6 +10,7 @@ const Map = withScriptjs(
   withGoogleMap(props => {
     return (
       <GoogleMap
+        key={props.coords.lat}
         defaultZoom={12}
         defaultCenter={{ lat: props.coords.lat, lng: props.coords.lon }}
       >

@@ -6,13 +6,14 @@
 
 import React from 'react'
 import Container from 'react-bootstrap/Container'
+import Badge from 'react-bootstrap/Badge'
 
 const ForecastContainer = props => {
   return (
     <Container>
-      <h4>
-        Hourly Forecast <span className="badge badge-primary">Coming Soon</span>
-      </h4>
+      <h3>
+        Hourly Forecast <Badge variant="primary">Coming Soon</Badge>
+      </h3>
     </Container>
   )
 }

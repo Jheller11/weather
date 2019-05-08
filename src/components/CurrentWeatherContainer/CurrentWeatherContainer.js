@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Map from '../Map/Map'
 import Icon from '../Icon/Icon'
+import Instructions from '../Instructions/Instructions'
 
 const CurrentWeatherContainer = props => {
   // all temps received in kelvin from api
@@ -17,13 +18,19 @@ const CurrentWeatherContainer = props => {
     return dateTime.toString()
   }
   if (!props.data) {
-    return <Container>No location selected</Container>
+    return (
+      <Container>
+        <h3>Weather</h3>
+        <Instructions />
+      </Container>
+    )
   } else {
     return (
       <Container>
         <Row>
           <Col sm={6}>
-            <h4>Current weather for: {props.data.name}</h4>
+            <h3>Weather</h3>
+            <h4>Current weather for {props.data.name}</h4>
             <span className="text-center">
               <Icon />
             </span>
