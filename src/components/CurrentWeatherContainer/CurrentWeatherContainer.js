@@ -7,8 +7,14 @@ import Map from '../Map/Map'
 import Icon from '../Icon/Icon'
 
 const CurrentWeatherContainer = props => {
+  // all temps received in kelvin from api
   const kelvinToFahrenheit = temp => {
     return parseInt(temp * (9 / 5) - 459.67)
+  }
+  // convert date to string
+  const msToString = milliseconds => {
+    let dateTime = new Date(milliseconds * 1000)
+    return dateTime.toString()
   }
   if (!props.data) {
     return <Container>No location selected</Container>
@@ -25,8 +31,13 @@ const CurrentWeatherContainer = props => {
               High/Low: {kelvinToFahrenheit(props.data.main.temp_max)} /{' '}
               {kelvinToFahrenheit(props.data.main.temp_min)}
             </div>
-            <div>Winds: {props.data.wind.speed} mph</div>
+            <div>Winds: {props.data.wind.speed} m/s</div>
             <div>Humidity: {props.data.main.humidity}%</div>
+            <div>Cloud Cover: {props.data.clouds.all}%</div>
+            <hr />
+            <small className="text-info">
+              Data current as of {msToString(props.data.dt)}
+            </small>
           </Col>
           <Col sm={6}>
             <h4>Location</h4>
