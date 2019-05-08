@@ -6,10 +6,12 @@ import styles from './App.module.css'
 import LocationList from './components/LocationList/LocationList'
 import CurrentWeatherContainer from './components/CurrentWeatherContainer/CurrentWeatherContainer'
 import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
 import Alert from 'react-bootstrap/Alert'
 import FormControl from 'react-bootstrap/FormControl'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import ForecastContainer from './components/ForecastContainer/ForecastContainer'
 
 class App extends Component {
   constructor(props) {
@@ -120,7 +122,12 @@ class App extends Component {
         }
         let newLocations = removeDuplicates(locations, 'name')
         // set state with returned data and limit location list to 10 items
-        this.setState({ data: res.data, locations: newLocations.slice(0, 10) })
+        this.setState({
+          data: res.data,
+          locations: newLocations.slice(0, 10),
+          error: false,
+          errorMessage: ''
+        })
         // save location data to localStorage for future sessions
         this.saveLocalStorage()
       })
@@ -136,6 +143,7 @@ class App extends Component {
   render() {
     return (
       <Fragment>
+        {/* header */}
         <Navbar expand="md" bg="dark" variant="dark">
           <Navbar.Brand href="#">
             <img src={`favicon.ico`} alt="site icon" />
@@ -143,7 +151,7 @@ class App extends Component {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Form inline>
+            <Form inline className="ml-auto">
               <Button
                 variant="outline-info"
                 onClick={this.getLocationFromBrowser}
@@ -157,6 +165,7 @@ class App extends Component {
                 type="text"
                 placeholder="Zip Code"
                 className="mr-sm-2"
+                style={{ maxWidth: '200px' }}
               />
               <Button type="submit" variant="outline-info">
                 Search
@@ -164,6 +173,7 @@ class App extends Component {
             </Form>
           </Navbar.Collapse>
         </Navbar>
+        {/* /header */}
         {/* Main */}
         <main className={styles.App}>
           {!this.state.error ? null : (
@@ -183,8 +193,11 @@ class App extends Component {
           />
           <hr />
           <CurrentWeatherContainer data={this.state.data} />
-          {/* <ForecastContainer /> */}
+          <hr />
+          <ForecastContainer />
         </main>
+        {/* /main */}
+
         {/* footer? */}
       </Fragment>
     )
