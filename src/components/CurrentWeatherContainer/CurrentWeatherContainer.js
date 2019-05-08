@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Map from '../Map/Map'
+import Icon from '../Icon/Icon'
 
 const CurrentWeatherContainer = props => {
   const kelvinToFahrenheit = temp => {
@@ -29,12 +30,12 @@ const CurrentWeatherContainer = props => {
           </Col>
           <Col sm={6}>
             <h4>Location</h4>
-            <img src="" alt="weather image/icon" />
+            <Icon />
             <Map
               isMarkerShown
               googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
                 process.env.REACT_APP_MAPS_API_KEY
-              }&callback=initMap`}
+              }`}
               loadingElement={<div style={{ height: `100%` }} />}
               containerElement={<div style={{ height: `400px` }} />}
               mapElement={<div style={{ height: `100%` }} />}
