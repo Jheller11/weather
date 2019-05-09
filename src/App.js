@@ -240,8 +240,12 @@ class App extends Component {
           <hr />
           <CurrentWeatherContainer data={this.state.data} />
           <hr />
-          <ForecastContainer />
-          <hr />
+          {this.state.data ? (
+            <>
+              <ForecastContainer coords={this.state.data.coord} />
+              <hr />
+            </>
+          ) : null}
           <Container>
             <h6>Settings</h6>
             <span>Theme: </span>

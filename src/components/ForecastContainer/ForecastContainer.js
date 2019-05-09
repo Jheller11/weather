@@ -4,18 +4,38 @@
 
 // design UI components to display forecast (Forecast window)
 
-import React from 'react'
+import React, { Component } from 'react'
 import Container from 'react-bootstrap/Container'
 import Badge from 'react-bootstrap/Badge'
+import axios from 'axios'
 
-const ForecastContainer = props => {
-  return (
-    <Container>
-      <h3>
-        Hourly Forecast <Badge variant="primary">Coming Soon</Badge>
-      </h3>
-    </Container>
-  )
+class ForecastContainer extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: null
+    }
+  }
+  componentDidMount() {
+    let key = process.env.REACT_APP_WEATHER_API_KEY
+    axios
+      .get(
+        'https://api.openweathermap.org/data/2.5/forecast?' +
+          `lat=${this.props.coords.lat}&lon=${this.props.coords.lon}` +
+          `&APPID=${key}`
+      )
+      .then(res => this.setState({ data: res.data }))
+      .catch(err => console.log(err))
+  }
+
+  render() {
+    console.log(this.state.data)
+    return (
+      <Container>
+        <h3>Hourly Forecast</h3>
+      </Container>
+    )
+  }
 }
 
 export default ForecastContainer
