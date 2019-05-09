@@ -8,6 +8,7 @@ import React, { Component } from 'react'
 import Container from 'react-bootstrap/Container'
 import Badge from 'react-bootstrap/Badge'
 import axios from 'axios'
+import ForecastItem from '../ForecastItem.js/ForecastItem'
 
 class ForecastContainer extends Component {
   constructor(props) {
@@ -33,6 +34,11 @@ class ForecastContainer extends Component {
     return (
       <Container>
         <h3>Hourly Forecast</h3>
+        {this.state.data
+          ? this.state.data.list.map(item => (
+              <ForecastItem key={item.dt} data={item} />
+            ))
+          : null}
       </Container>
     )
   }
