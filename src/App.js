@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import axios from 'axios'
 import styles from './App.module.css'
+import querystring from 'querystring'
 
 // components
 import LocationList from './components/LocationList/LocationList'
@@ -118,41 +119,42 @@ class App extends Component {
 
   // fetch weather based on zip or coordinates
   fetchWeather(location) {
-    let key = process.env.REACT_APP_WEATHER_API_KEY
     // set request url based on type of location provided (zip vs browser geolocation)
     let url = location.latitude
       ? 'https://api.openweathermap.org/data/2.5/weather?' +
-        `lat=${location.latitude}&lon=${location.longitude}` +
-        `&APPID=${key}`
+        `lat=${location.latitude}&lon=${location.longitude}`
       : 'https://api.openweathermap.org/data/2.5/weather?' +
-        `zip=${location},us` +
-        `&APPID=${key}`
+        `zip=${location},us`
     // make request to openweather api
     axios
-      .get(url)
+      .post(
+        'http://localhost:4000/weather',
+        querystring.stringify({ url: url })
+      )
       .then(res => {
-        let locations = this.state.locations
-        locations.unshift({
-          name: res.data.name,
-          coords: res.data.coord
-        })
-        // function for removing duplicate items in the array
-        // credit https://ilikekillnerds.com/2016/05/removing-duplicate-objects-array-property-name-javascript/
-        const removeDuplicates = (arr, prop) => {
-          return arr.filter((obj, pos, arr) => {
-            return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos
-          })
-        }
-        let newLocations = removeDuplicates(locations, 'name')
-        // set state with returned data and limit location list to 10 items
-        this.setState({
-          data: res.data,
-          locations: newLocations.slice(0, 10),
-          error: false,
-          errorMessage: ''
-        })
-        // save location data to localStorage for future sessions
-        this.saveLocalStorage()
+        console.log(res)
+        // let locations = this.state.locations
+        // locations.unshift({
+        //   name: res.data.name,
+        //   coords: res.data.coord
+        // })
+        // // function for removing duplicate items in the array
+        // // credit https://ilikekillnerds.com/2016/05/removing-duplicate-objects-array-property-name-javascript/
+        // const removeDuplicates = (arr, prop) => {
+        //   return arr.filter((obj, pos, arr) => {
+        //     return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos
+        //   })
+        // }
+        // let newLocations = removeDuplicates(locations, 'name')
+        // // set state with returned data and limit location list to 10 items
+        // this.setState({
+        //   data: res.data,
+        //   locations: newLocations.slice(0, 10),
+        //   error: false,
+        //   errorMessage: ''
+        // })
+        // // save location data to localStorage for future sessions
+        // this.saveLocalStorage()
       })
       .catch(err => {
         console.log(err)
