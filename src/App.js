@@ -161,7 +161,8 @@ class App extends Component {
         console.log(err)
         this.setState({
           error: true,
-          errorMessage: 'Something went wrong, please try again.'
+          errorMessage:
+            'Something went wrong, please try again. If searching by zip code, please ensure that you enter a valid 5-digit US zip code.'
         })
       })
   }
