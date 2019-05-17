@@ -16,14 +16,18 @@ class ForecastContainer extends Component {
   }
 
   componentDidMount() {
-    let url =
+    // reqeust URL provided to server to request external resource
+    let requestURL =
       'https://api.openweathermap.org/data/2.5/forecast?' +
       `lat=${this.props.coords.lat}&lon=${this.props.coords.lon}`
+    // determine server address based on production/dev
+    let serverURL =
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:4000/weather/forecast'
+        : process.env.REACT_APP_NODE_SERVER_URL
+    // send request for data to node server
     axios
-      .post(
-        'http://localhost:4000/weather/forecast',
-        querystring.stringify({ url: url })
-      )
+      .post(serverURL, querystring.stringify({ url: requestURL }))
       .then(res => this.setState({ data: res.data }))
       .catch(err => console.log(err))
   }

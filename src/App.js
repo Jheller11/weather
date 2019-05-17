@@ -120,19 +120,20 @@ class App extends Component {
   // fetch weather based on zip or coordinates
   fetchWeather(location) {
     // set request url based on type of location provided (zip vs browser geolocation)
-    let url = location.latitude
+    let requestURL = location.latitude
       ? 'https://api.openweathermap.org/data/2.5/weather?' +
         `lat=${location.latitude}&lon=${location.longitude}`
       : 'https://api.openweathermap.org/data/2.5/weather?' +
         `zip=${location},us`
-    // make request to openweather api
+    // determine server address based on production/dev
+    let serverURL =
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:4000/weather/forecast'
+        : process.env.REACT_APP_NODE_SERVER_URL
+    // send request for data to node server
     axios
-      .post(
-        'http://localhost:4000/weather/current',
-        querystring.stringify({ url: url })
-      )
+      .post(serverURL, querystring.stringify({ url: requestURL }))
       .then(res => {
-        console.log(res)
         let locations = this.state.locations
         locations.unshift({
           name: res.data.name,
