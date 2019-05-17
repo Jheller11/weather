@@ -128,33 +128,33 @@ class App extends Component {
     // make request to openweather api
     axios
       .post(
-        'http://localhost:4000/weather',
+        'http://localhost:4000/weather/current',
         querystring.stringify({ url: url })
       )
       .then(res => {
         console.log(res)
-        // let locations = this.state.locations
-        // locations.unshift({
-        //   name: res.data.name,
-        //   coords: res.data.coord
-        // })
-        // // function for removing duplicate items in the array
-        // // credit https://ilikekillnerds.com/2016/05/removing-duplicate-objects-array-property-name-javascript/
-        // const removeDuplicates = (arr, prop) => {
-        //   return arr.filter((obj, pos, arr) => {
-        //     return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos
-        //   })
-        // }
-        // let newLocations = removeDuplicates(locations, 'name')
-        // // set state with returned data and limit location list to 10 items
-        // this.setState({
-        //   data: res.data,
-        //   locations: newLocations.slice(0, 10),
-        //   error: false,
-        //   errorMessage: ''
-        // })
-        // // save location data to localStorage for future sessions
-        // this.saveLocalStorage()
+        let locations = this.state.locations
+        locations.unshift({
+          name: res.data.name,
+          coords: res.data.coord
+        })
+        // function for removing duplicate items in the array
+        // credit https://ilikekillnerds.com/2016/05/removing-duplicate-objects-array-property-name-javascript/
+        const removeDuplicates = (arr, prop) => {
+          return arr.filter((obj, pos, arr) => {
+            return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos
+          })
+        }
+        let newLocations = removeDuplicates(locations, 'name')
+        // set state with returned data and limit location list to 10 items
+        this.setState({
+          data: res.data,
+          locations: newLocations.slice(0, 10),
+          error: false,
+          errorMessage: ''
+        })
+        // save location data to localStorage for future sessions
+        this.saveLocalStorage()
       })
       .catch(err => {
         console.log(err)

@@ -4,6 +4,7 @@ import axios from 'axios'
 import ForecastItem from '../ForecastItem.js/ForecastItem'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/Button'
+import querystring from 'querystring'
 
 class ForecastContainer extends Component {
   constructor(props) {
@@ -15,13 +16,13 @@ class ForecastContainer extends Component {
   }
 
   componentDidMount() {
-    let key = process.env.REACT_APP_WEATHER_API_KEY
-    console.log('api called')
+    let url =
+      'https://api.openweathermap.org/data/2.5/forecast?' +
+      `lat=${this.props.coords.lat}&lon=${this.props.coords.lon}`
     axios
-      .get(
-        'https://api.openweathermap.org/data/2.5/forecast?' +
-          `lat=${this.props.coords.lat}&lon=${this.props.coords.lon}` +
-          `&APPID=${key}`
+      .post(
+        'http://localhost:4000/weather/forecast',
+        querystring.stringify({ url: url })
       )
       .then(res => this.setState({ data: res.data }))
       .catch(err => console.log(err))
