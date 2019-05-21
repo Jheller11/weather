@@ -24,7 +24,7 @@ class ForecastContainer extends Component {
     let serverURL =
       process.env.NODE_ENV === 'development'
         ? 'http://localhost:4000/weather/forecast'
-        : process.env.REACT_APP_NODE_SERVER_URL
+        : process.env.REACT_APP_NODE_SERVER_URL + '/weather/forecast'
     // send request for data to node server
     axios
       .post(serverURL, querystring.stringify({ url: requestURL }))
