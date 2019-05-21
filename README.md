@@ -17,3 +17,5 @@ All data for this application is retreived via the Open Weather Map API (https:/
 ### Deployed Application
 
 https://j-weather.surge.sh
+
+### Connected to Proxy
