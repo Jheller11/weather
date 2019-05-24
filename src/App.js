@@ -35,6 +35,7 @@ class App extends Component {
     this.deleteLocationItem = this.deleteLocationItem.bind(this)
     this.toggleTheme = this.toggleTheme.bind(this)
     this.clearLocalStorage = this.clearLocalStorage.bind(this)
+    this.fetchForecast = this.fetchForecast.bind(this)
   }
 
   componentDidMount() {
@@ -156,6 +157,7 @@ class App extends Component {
         })
         // save location data to localStorage for future sessions
         this.saveLocalStorage()
+        this.fetchForecast()
       })
       .catch(err => {
         console.log(err)
@@ -165,6 +167,23 @@ class App extends Component {
             'Something went wrong, please try again. If searching by zip code, please ensure that you enter a valid 5-digit US zip code.'
         })
       })
+  }
+
+  fetchForecast() {
+    // reqeust URL provided to server to request external resource
+    let requestURL =
+      'https://api.openweathermap.org/data/2.5/forecast?' +
+      `lat=${this.state.data.coord.lat}&lon=${this.state.data.coord.lon}`
+    // determine server address based on production/dev
+    let serverURL =
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:4000/weather/forecast'
+        : process.env.REACT_APP_NODE_SERVER_URL + '/weather/forecast'
+    // send request for data to node server
+    axios
+      .post(serverURL, querystring.stringify({ url: requestURL }))
+      .then(res => this.setState({ forecast: res.data }))
+      .catch(err => console.log(err))
   }
 
   render() {
@@ -244,12 +263,8 @@ class App extends Component {
           <hr />
           <CurrentWeatherContainer data={this.state.data} />
           <hr />
-          {this.state.data ? (
-            <>
-              <ForecastContainer coords={this.state.data.coord} />
-              <hr />
-            </>
-          ) : null}
+          <ForecastContainer forecast={this.state.forecast} />
+          <hr />
           <Container>
             <h6>Settings</h6>
             <span>Theme: </span>
